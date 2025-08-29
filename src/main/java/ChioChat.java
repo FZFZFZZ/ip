@@ -1,28 +1,52 @@
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.function.Consumer;
 
 public class ChioChat {
+    private static final String DIVIDE_LINE = "____________________________________________________________\n";
+
     private static String wrapOutput(String input) {
-        StringBuilder res = new StringBuilder();
-        res.append("____________________________________________________________\n");
-        res.append(input).append("\n");
-        res.append("____________________________________________________________\n");
-        return res.toString();
+        return DIVIDE_LINE + input + "\n" + DIVIDE_LINE;
+    }
+
+    private static final Map<String, Consumer<String>> COMMAND_MAP = Map.of(
+        "bye", (input) -> handleBye(),
+        "list", (input) -> handleList()
+    );
+
+    private static void handleBye() {
+        System.out.print(wrapOutput("Bye. Hope to see you again soon!"));
+        System.exit(0);
+    }
+
+    private static void handleGreeting() {
+        System.out.print(wrapOutput("Hello! I'm ChioChat\nWhat can I do for you?"));
+    }
+
+    private static void handleList() {
+        String res = "";
+        for (int i = 0; i < chatHistory.size(); i++) {
+            res += (i + 1) + ". " + chatHistory.get(i) + "\n";
+        }
+        res = res.substring(0, res.length() - 1);
+        System.out.print(wrapOutput(res));
+    }
+
+    private static final ArrayList<String> chatHistory = new ArrayList<>();
+
+    private static void defaultOperation(String input) {
+        chatHistory.add(input);
+        System.out.print(wrapOutput("added: " + input));
     }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        String greatingMSG = wrapOutput("Hello! I'm ChioChat\nWhat can I do for you?");
-        System.out.println(greatingMSG);
-
-        while (true) { 
-            String userInput = scanner.nextLine();
-            if (userInput.equals("bye")) {
-                System.out.println(wrapOutput("Bye. Hope to see you again soon!"));
-                break;
-            }
-            System.out.println(wrapOutput(userInput));
-
+        Scanner sc = new Scanner(System.in);
+        handleGreeting();
+        while (sc.hasNextLine()) {
+            String input = sc.nextLine().trim();
+            COMMAND_MAP.getOrDefault(input, ChioChat::defaultOperation).accept(input);
         }
+        sc.close();
     }
 }
