@@ -1,11 +1,28 @@
+import java.util.Scanner;
+
 public class ChioChat {
+    private static String wrapOutput(String input) {
+        StringBuilder res = new StringBuilder();
+        res.append("____________________________________________________________\n");
+        res.append(input).append("\n");
+        res.append("____________________________________________________________\n");
+        return res.toString();
+    }
+
     public static void main(String[] args) {
-        String greatingMSG = "____________________________________________________________\n"
-                + " Hello! I'm ChioChat\n"
-                + " What can I do for you?\n"
-                + "____________________________________________________________\n"
-                + " Bye. Hope to see you again soon!\n"
-                + "____________________________________________________________\n";
+        Scanner scanner = new Scanner(System.in);
+
+        String greatingMSG = wrapOutput("Hello! I'm ChioChat\nWhat can I do for you?");
         System.out.println(greatingMSG);
+
+        while (true) { 
+            String userInput = scanner.nextLine();
+            if (userInput.equals("bye")) {
+                System.out.println(wrapOutput("Bye. Hope to see you again soon!"));
+                break;
+            }
+            System.out.println(wrapOutput(userInput));
+
+        }
     }
 }
