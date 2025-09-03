@@ -17,8 +17,41 @@ public class ChioChat {
         "bye", (input) -> handleBye(),
         "list", (input) -> handleList(),
         "mark", (input) -> markDoneState(input, true),
-        "unmark", (input) -> markDoneState(input, false)
+        "unmark", (input) -> markDoneState(input, false),
+        "deadline", (input) -> addTask(input, "deadline"),
+        "event", (input) -> addTask(input, "event"),
+        "todo", (input) -> addTask(input, "todo")
     );
+
+    private static void addTask(String input, String taskType) {
+        String[] parts = input.split(" ", 2);
+        if (parts.length < 2) {
+            System.out.print(wrapOutput("Please provide a description for the " + taskType + " task."));
+            return;
+        }
+        switch (taskType) {
+            case "deadline" -> {
+                DeadlineTask deadlineTask = new DeadlineTask(parts[1]);
+                chatHistory.add(deadlineTask);
+                System.out.print(wrapOutput("Got it. I've added this task:\n" + deadlineTask.toString()
+                    + "\nNow you have " + chatHistory.size() + " tasks in the list."));
+            }
+            case "event" -> {
+                EventTask eventTask = new EventTask(parts[1]);
+                chatHistory.add(eventTask);
+                System.out.print(wrapOutput("Got it. I've added this task:\n" + eventTask.toString()
+                    + "\nNow you have " + chatHistory.size() + " tasks in the list."));
+            }
+            case "todo" -> {
+                ToDoTask todoTask = new ToDoTask(parts[1]);
+                chatHistory.add(todoTask);
+                System.out.print(wrapOutput("Got it. I've added this task:\n" + todoTask.toString()
+                    + "\nNow you have " + chatHistory.size() + " tasks in the list."));
+            }
+            default -> throw new IllegalArgumentException("Unknown task type: " + taskType);
+        }
+
+    }
 
     private static void markDoneState(String input, boolean state) {
         try {
@@ -63,9 +96,7 @@ public class ChioChat {
     private static final ArrayList<Task> chatHistory = new ArrayList<>();
 
     private static void defaultOperation(String input) {
-        Task newTask = new Task(input);
-        chatHistory.add(newTask);
-        System.out.print(wrapOutput("added: " + input));
+        System.out.print("Please provide a valid command.");
     }
 
     public static void main(String[] args) {
