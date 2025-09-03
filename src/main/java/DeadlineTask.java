@@ -30,7 +30,7 @@ public class DeadlineTask extends Task {
     public String toString() {
         String baseString = ICON + super.toString();
         if (deadline != null && !deadline.isEmpty()) {
-            return String.format("%s (by: %s)", baseString, deadline);
+            return String.format("%s (by %s)", baseString, deadline);
         }
         return baseString;
     }
