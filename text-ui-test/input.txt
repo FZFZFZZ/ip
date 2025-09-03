@@ -1,4 +1,6 @@
-hello
-world
+read book
+return book
+buy bread
+mark 2
+unmark 2
 list
-bye

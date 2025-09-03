@@ -7,13 +7,41 @@ public class ChioChat {
     private static final String DIVIDE_LINE = "____________________________________________________________\n";
 
     private static String wrapOutput(String input) {
+        if (input.endsWith("\n")) {
+            input = input.substring(0, input.length() - 1);
+        }
         return DIVIDE_LINE + input + "\n" + DIVIDE_LINE;
     }
 
     private static final Map<String, Consumer<String>> COMMAND_MAP = Map.of(
         "bye", (input) -> handleBye(),
-        "list", (input) -> handleList()
+        "list", (input) -> handleList(),
+        "mark", (input) -> markDoneState(input, true),
+        "unmark", (input) -> markDoneState(input, false)
     );
+
+    private static void markDoneState(String input, boolean state) {
+        try {
+            int taskId = Integer.parseInt(input.split(" ")[1]);
+            if (taskId <= 0 || taskId > chatHistory.size()) {
+                throw new ChioChatException("Task ID " + taskId + " does not exist!");
+            }
+            Task task = chatHistory.get(taskId - 1);
+            if (state) {
+                task.markAsDone();
+                System.out.print(wrapOutput("Nice! I've marked this task as done:\n" + task.toString()));
+            } else {
+                task.markAsUndone();
+                System.out.print(wrapOutput("OK, I've marked this task as not done yet:\n" + task.toString()));
+            }
+        } catch (NumberFormatException e) {
+            System.out.print(wrapOutput("Please provide a valid number!"));
+        } catch (ChioChatException e) {
+            System.out.print(wrapOutput(e.getMessage()));
+        } catch (Exception e) {
+            System.out.print(wrapOutput("An error occurred: " + e.getMessage()));
+        }
+    }
 
     private static void handleBye() {
         System.out.print(wrapOutput("Bye. Hope to see you again soon!"));
@@ -25,28 +53,29 @@ public class ChioChat {
     }
 
     private static void handleList() {
-        String res = "";
+        String res = "Here are the tasks in your list:\n";
         for (int i = 0; i < chatHistory.size(); i++) {
-            res += (i + 1) + ". " + chatHistory.get(i) + "\n";
+            res += (i + 1) + ". " + chatHistory.get(i).toString() + "\n";
         }
-        res = res.substring(0, res.length() - 1);
         System.out.print(wrapOutput(res));
     }
 
-    private static final ArrayList<String> chatHistory = new ArrayList<>();
+    private static final ArrayList<Task> chatHistory = new ArrayList<>();
 
     private static void defaultOperation(String input) {
-        chatHistory.add(input);
+        Task newTask = new Task(input);
+        chatHistory.add(newTask);
         System.out.print(wrapOutput("added: " + input));
     }
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        handleGreeting();
-        while (sc.hasNextLine()) {
-            String input = sc.nextLine().trim();
-            COMMAND_MAP.getOrDefault(input, ChioChat::defaultOperation).accept(input);
+        try (Scanner sc = new Scanner(System.in)) {
+            handleGreeting();
+            while (sc.hasNextLine()) {
+                String input = sc.nextLine().trim();
+                String request = input.split(" ")[0];
+                COMMAND_MAP.getOrDefault(request, ChioChat::defaultOperation).accept(input);
+            }
         }
-        sc.close();
     }
 }
