@@ -20,13 +20,32 @@ public class ChioChat {
         "unmark", (input) -> markDoneState(input, false),
         "deadline", (input) -> addTask(input, "deadline"),
         "event", (input) -> addTask(input, "event"),
-        "todo", (input) -> addTask(input, "todo")
+        "todo", (input) -> addTask(input, "todo"),
+        "delete", (input) -> deleteTask(input)
     );
 
+    private static void deleteTask(String input) {
+        try {
+            int taskId = Integer.parseInt(input.split(" ")[1]);
+            if (taskId <= 0 || taskId > chatHistory.size()) {
+                throw new ChioChatException("Task ID " + taskId + " does not exist!");
+            }
+            Task task = chatHistory.remove(taskId - 1);
+            System.out.print(wrapOutput("Noted. I've removed this task:\n" + task.toString()
+                + "\nNow you have " + chatHistory.size() + " tasks in the list."));
+        } catch (NumberFormatException e) {
+            System.out.print(wrapOutput("OOPS!!! Please provide a valid number!"));
+        } catch (ChioChatException e) {
+            System.out.print(wrapOutput(e.getMessage()));
+        } catch (Exception e) {
+            System.out.print(wrapOutput("An error occurred: " + e.getMessage()));
+        }
+    }
+    
     private static void addTask(String input, String taskType) {
         String[] parts = input.split(" ", 2);
         if (parts.length < 2) {
-            System.out.print(wrapOutput("Please provide a description for the " + taskType + " task."));
+            System.out.print(wrapOutput("OOPS!!! The description of a " + taskType + " cannot be empty."));
             return;
         }
         switch (taskType) {
@@ -96,7 +115,11 @@ public class ChioChat {
     private static final ArrayList<Task> chatHistory = new ArrayList<>();
 
     private static void defaultOperation(String input) {
-        System.out.print("Please provide a valid command.");
+        try {
+            throw new ChioChatException("OOPS!!! I'm sorry, but I don't know what that means :-(");
+        } catch (ChioChatException e) {
+            System.out.print(wrapOutput(e.getMessage()));
+        }
     }
 
     public static void main(String[] args) {
