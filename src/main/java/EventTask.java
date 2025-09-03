@@ -37,7 +37,7 @@ public class EventTask extends Task {
     public String toString() {
         String baseString = ICON + super.toString();
         if (startTime != null && endTime != null && !startTime.isEmpty() && !endTime.isEmpty()) {
-            return String.format("%s (from: %s to: %s)", baseString, startTime, endTime);
+            return String.format("%s (from %s to %s)", baseString, startTime, endTime);
         }
         return baseString;
     }
