@@ -1,10 +1,12 @@
+package chiochat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class DeadlineTask extends Task {
-    private static final String ICON = "[D]";
-    private String deadline;
+public class EventTask extends Task {
+    private static final String ICON = "[E]";
+    private String startTime;
+    private String endTime;
 
     private static final DateTimeFormatter INPUT_FORMAT_1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
     private static final DateTimeFormatter INPUT_FORMAT_2 = DateTimeFormatter.ofPattern("yyyy/MM/dd HHmm");
@@ -30,43 +32,56 @@ public class DeadlineTask extends Task {
         }
     }
 
-    public DeadlineTask(String description) {
+    public EventTask(String description) {
         super(extractMainDescription(description));
-        parseDeadline(description);
+        parseTimeFields(description);
     }
 
     private static String extractMainDescription(String fullDescription) {
         String desc = fullDescription;
-        if (desc.contains("/by")) {
-            desc = desc.substring(0, desc.indexOf("/by")).trim();
+        if (desc.contains("/from")) {
+            desc = desc.substring(0, desc.indexOf("/from")).trim();
         }
         return desc;
     }
 
-    private void parseDeadline(String fullDescription) {
+    private void parseTimeFields(String fullDescription) {
         try {
-            int byIndex = fullDescription.indexOf("/by");
-            if (byIndex != -1) {
-                deadline = fullDescription.substring(byIndex + 3).trim();
-                if (isStandardTimeRep(deadline)) {
-                    deadline = convertToStandardTime(deadline);
+            int fromIndex = fullDescription.indexOf("/from");
+            int toIndex = fullDescription.indexOf("/to");
+            
+            if (fromIndex != -1 && toIndex != -1) {
+                // Extract time between /from and /to
+                startTime = fullDescription.substring(fromIndex + 5, toIndex).trim();
+                if (isStandardTimeRep(startTime)) {
+                    startTime = convertToStandardTime(startTime);
+                }
+                // Extract time after /to
+                endTime = fullDescription.substring(toIndex + 3).trim();
+                if (isStandardTimeRep(endTime)) {
+                    endTime = convertToStandardTime(endTime);
                 }
             }
         } catch (Exception e) {
-            deadline = "";
+            startTime = "";
+            endTime = "";
         }
     }
 
     @Override
     public String toString() {
         String baseString = ICON + super.toString();
-        if (deadline != null && !deadline.isEmpty()) {
-            return String.format("%s (by %s)", baseString, deadline);
+        if (startTime != null && endTime != null && !startTime.isEmpty() && !endTime.isEmpty()) {
+            return String.format("%s (from %s to %s)", baseString, startTime, endTime);
         }
         return baseString;
     }
 
-    public String getDeadline() {
-        return deadline;
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
     }
 }

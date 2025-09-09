@@ -1,3 +1,4 @@
+package chiochat;
 public class Ui {
     private static final String DIVLINE = "______________________________________________\n";
     private static final String GREETING_MSG = "Hello! I'm ChioChat\nWhat can I do for you?";

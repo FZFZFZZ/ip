@@ -1,8 +1,10 @@
+package chiochat;
+
 import java.util.Scanner;
 
 public class ChioChat {
 
-    private static final String FILE_PATH = "./ip/src/main/java/data/TaskDB.txt";
+    private static final String FILE_PATH = "../src/main/java/data/TaskDB.txt";
     private final CommandManager commandMgr;
 
     public ChioChat(String filePath) {

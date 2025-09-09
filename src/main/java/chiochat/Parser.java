@@ -1,3 +1,4 @@
+package chiochat;
 public class Parser {
 
     public static String parseRequest(String input) throws ChioChatException.EmptyInput {
