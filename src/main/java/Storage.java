@@ -21,8 +21,16 @@ public class Storage {
         return this.chatHistory;
     }
 
+    public int getChatHistorySize() {
+        return this.chatHistory.size();
+    }
+
     public ArrayList<SavedMeta> getMetaHistory() {
         return this.metaHistory;
+    }
+
+    public int getMetaHistorySize() {
+        return this.metaHistory.size();
     }
 
     public static class SavedMeta {
@@ -94,11 +102,7 @@ public class Storage {
                     case 'E' -> t = new EventTask(meta.payload);
                     default -> throw new IllegalStateException("Unexpected value: " + meta.type);
                 }
-                if (meta.done) {
-                    t.markAsDone();
-                } else {
-                    t.markAsUndone();
-                }
+                t.markState(meta.done);
                 loadedTasks.add(t);
                 loadedMeta.add(meta);
             }

@@ -15,12 +15,8 @@ public class Task {
         return isDone;
     }
 
-    public void markAsDone() {
-        isDone = true;
-    }
-
-    public void markAsUndone() {
-        isDone = false;
+    public void markState(boolean state) {
+        isDone = state;
     }
 
     @Override
