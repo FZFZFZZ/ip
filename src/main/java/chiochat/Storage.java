@@ -82,6 +82,17 @@ public class Storage {
         }
     }
 
+    // find method
+    public ArrayList<Task> find(String keyword) {
+        ArrayList<Task> result = new ArrayList<>();
+        for (Task task : chatHistory) {
+            if (task.toString().contains(keyword)) {
+                result.add(task);
+            }
+        }
+        return result;
+    }
+
     public void loadFromDisk() {
         File f = new File(this.filePath);
         if (!f.exists()) return;

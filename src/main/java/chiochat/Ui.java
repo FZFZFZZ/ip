@@ -55,4 +55,13 @@ public class Ui {
         }
         System.out.print(wrapOutput(res.toString()));
     }
+
+    // show find result
+    public void showFindResult(java.util.List<Task> matchedTasks) {
+        StringBuilder res = new StringBuilder("Here are the matching tasks in your list:\n");
+        for (int i = 0; i < matchedTasks.size(); i++) {
+            res.append(i + 1).append(".").append(matchedTasks.get(i)).append("\n");
+        }
+        System.out.print(wrapOutput(res.toString()));
+    }
 }

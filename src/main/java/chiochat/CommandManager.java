@@ -1,4 +1,5 @@
 package chiochat;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -15,8 +16,20 @@ public class CommandManager {
         "deadline", (input) -> addTask(input, "deadline"),
         "event", (input) -> addTask(input, "event"),
         "todo", (input) -> addTask(input, "todo"),
-        "delete", (input) -> deleteTask(input)
+        "delete", (input) -> deleteTask(input),
+        "find", (input) -> findTask(input)
     );
+
+    private void findTask(String input) {
+        String[] parts = input.split(" ", 2);
+        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            System.out.print(this.ui.wrapError("Please provide a keyword to search for."));
+            return;
+        }
+        String keyword = parts[1].trim();
+        ArrayList<Task> matchedTasks = this.storage.find(keyword);
+        this.ui.showFindResult(matchedTasks);
+    }
 
     private void addTask(String input, String taskType) {
         String[] parts = input.split(" ", 2);
