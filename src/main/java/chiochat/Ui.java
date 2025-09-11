@@ -8,6 +8,7 @@ public class Ui {
     
     public Ui() {}
 
+    // wrap text output in-between the div line
     public String wrapOutput(String input) {
         if (input.endsWith("\n")) {
             input = input.substring(0, input.length() - 1);
@@ -15,24 +16,29 @@ public class Ui {
         return DIVLINE + input + "\n" + DIVLINE;
     }
 
+    // wrap error output
     public String wrapError(String input) {
         return "【ERROR】" + input;
     }
 
+    // delete message
     public void deleteMS(Task task, Storage storage) {
         System.out.print(wrapOutput(
             "Noted. I've removed this task:\n" + task
             + "\nNow you have " + storage.getChatHistorySize() + " tasks in the list."));
     }
 
+    // greet message
     public void greetMS() {
         System.out.print(wrapOutput(GREETING_MSG));
     }
 
+    // bye message
     public void byeMS() {
         System.out.print(wrapOutput(BYE_MSG));
     }
 
+    // mark completion status message
     public void markStateMS(Task task, boolean state) {
         if (state) {
             System.out.print(wrapOutput(MARK_MSG + task));
@@ -41,6 +47,7 @@ public class Ui {
         }
     }
 
+    // enumerate and output all the tasks in the storage
     public void showTaskList(Storage storage) {
         StringBuilder res = new StringBuilder("Here are the tasks in your list:\n");
         for (int i = 0; i < storage.getChatHistorySize(); i++) {

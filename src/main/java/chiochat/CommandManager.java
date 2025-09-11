@@ -6,6 +6,7 @@ public class CommandManager {
     private final Ui ui;
     private final Storage storage;
     
+    // command map
     public final Map<String, Consumer<String>> COMMAND_MAP = Map.of(
         "bye", (input) -> handleBye(),
         "list", (input) -> handleList(),
@@ -70,10 +71,12 @@ public class CommandManager {
         }
     }
 
+    // getter for storage instance used by manager
     public Storage getStorage() {
         return this.storage;
     }
 
+    // greet
     public void handleGreeting() {
         this.ui.greetMS();
     }
@@ -103,6 +106,7 @@ public class CommandManager {
         }
     }
 
+    // constructor
     public CommandManager(Ui ui, Storage storage) {
         this.ui = ui;
         this.storage = storage;

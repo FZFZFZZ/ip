@@ -31,6 +31,7 @@ public class DeadlineTask extends Task {
         }
     }
 
+    // constructor
     public DeadlineTask(String description) {
         super(extractMainDescription(description));
         parseDeadline(description);
@@ -67,6 +68,7 @@ public class DeadlineTask extends Task {
         return baseString;
     }
 
+    // getter for deadline stored
     public String getDeadline() {
         return deadline;
     }

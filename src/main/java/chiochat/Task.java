@@ -3,6 +3,7 @@ public class Task {
     private final String description;
     private boolean isDone;
 
+    // constructor
     public Task(String description) {
         this.description = description;
         this.isDone = false;
@@ -12,10 +13,12 @@ public class Task {
         return description;
     }
 
+    // getter for status
     public boolean isDone() {
         return isDone;
     }
 
+    // change isDone status
     public void markState(boolean state) {
         isDone = state;
     }

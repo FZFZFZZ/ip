@@ -32,6 +32,7 @@ public class EventTask extends Task {
         }
     }
 
+    // constructor
     public EventTask(String description) {
         super(extractMainDescription(description));
         parseTimeFields(description);
@@ -77,10 +78,12 @@ public class EventTask extends Task {
         return baseString;
     }
 
+    // getter for start time
     public String getStartTime() {
         return startTime;
     }
 
+    // getter for end time
     public String getEndTime() {
         return endTime;
     }

@@ -7,11 +7,11 @@ public class ChioChat {
     private static final String FILE_PATH = "../src/main/java/data/TaskDB.txt";
     private final CommandManager commandMgr;
 
-    public ChioChat(String filePath) {
+    private ChioChat(String filePath) {
         this.commandMgr = new CommandManager(new Ui(), new Storage(filePath));
     }
 
-    public void run() {
+    private void run() {
         commandMgr.getStorage().loadFromDisk();
 
         try (Scanner sc = new Scanner(System.in)) {
