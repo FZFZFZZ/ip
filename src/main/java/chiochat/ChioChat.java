@@ -1,37 +1,26 @@
 package chiochat;
 
-import java.util.Scanner;
+import java.util.function.Function;
 
 public class ChioChat {
 
-    private static final String FILE_PATH = "../src/main/java/data/TaskDB.txt";
-    private final CommandManager commandMgr;
+    public final CommandManager commandMgr;
 
-    private ChioChat(String filePath) {
+    public ChioChat(String filePath) {
         this.commandMgr = new CommandManager(new Ui(), new Storage(filePath));
     }
 
-    private void run() {
-        commandMgr.getStorage().loadFromDisk();
-
-        try (Scanner sc = new Scanner(System.in)) {
-            commandMgr.handleGreeting();
-            while (sc.hasNextLine()) {
-                String input = sc.nextLine();
-                try {
-                    String request = Parser.parseRequest(input);
-                    commandMgr.COMMAND_MAP
-                              .getOrDefault(request, ChioChatException::new)
-                              .accept(input);
-                } catch (ChioChatException.EmptyInput e) {
-                    System.out.println(e.getMessage());
-                }
-            }
+    public String getResponse(String input) throws ChioChatException.EmptyInput {
+        String request = Parser.parseRequest(input);
+        Function<String, String> command = commandMgr.COMMAND_MAP.get(request);
+        if (command == null) {
+            return "Sorry! I cannot understand the command...";
         }
-    }
-
-    public static void main(String[] args) {
-        new ChioChat(FILE_PATH).run();
+        try {
+            return command.apply(input);
+        } catch (Exception e) {
+            return e.getMessage();
+        }
     }
 }
 
