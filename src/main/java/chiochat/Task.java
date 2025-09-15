@@ -1,12 +1,12 @@
 package chiochat;
 public class Task {
     private final String description;
-    private boolean isDone;
+    private boolean isCompleted;
 
     // constructor
     public Task(String description) {
         this.description = description;
-        this.isDone = false;
+        this.isCompleted = false;
     }
 
     public String getDescription() {
@@ -15,16 +15,16 @@ public class Task {
 
     // getter for status
     public boolean isDone() {
-        return isDone;
+        return isCompleted;
     }
 
     // change isDone status
     public void markState(boolean state) {
-        isDone = state;
+        isCompleted = state;
     }
 
     @Override
     public String toString() {
-        return (isDone ? "[X] " : "[ ] ") + description;
+        return (isCompleted ? "[X] " : "[ ] ") + description;
     }
 }
