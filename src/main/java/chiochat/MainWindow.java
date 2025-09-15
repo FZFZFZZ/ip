@@ -1,5 +1,7 @@
 package chiochat;
 
+import java.util.stream.Stream;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -53,9 +55,11 @@ public class MainWindow extends AnchorPane {
                 return;
             }
             String chioChatText = chioChat.getResponse(userInput.getText());
-            dialogContainer.getChildren().addAll(
-            DialogBox.getUserDialog(userText, userImage),
-            DialogBox.getBotDialog(chioChatText, botImage));
+            Stream.of(
+                DialogBox.getUserDialog(userText, userImage),
+                DialogBox.getBotDialog(chioChatText, botImage)
+            ).forEach(dialog -> dialogContainer.getChildren().add(dialog));
+            
             userInput.clear();
         } catch (ChioChatException.EmptyInput e) {
             userInput.clear();
