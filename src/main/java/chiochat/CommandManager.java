@@ -26,12 +26,16 @@ public class CommandManager {
             return this.ui.wrapError("Please provide a keyword to search for.");
         }
         String keyword = parts[1].trim();
+        assert !keyword.isEmpty() : "Keyword should not be empty";
         ArrayList<Task> matchedTasks = this.storage.find(keyword);
         return this.ui.showFindResult(matchedTasks);
     }
 
     private String addTask(String input, String taskType) {
         String[] parts = input.split(" ", 2);
+        assert taskType.equals("deadline") || taskType.equals("event") || taskType.equals("todo") 
+        : "Invalid task type: " + taskType;
+
         if (parts.length < 2) {
             return this.ui.wrapOutput("OOPS!!! The description of a " + taskType + " cannot be empty.");
         }
@@ -109,6 +113,9 @@ public class CommandManager {
 
     // constructor
     public CommandManager(Ui ui, Storage storage) {
+        assert ui != null : "Ui instance cannot be null";
+        assert storage != null : "Storage instance cannot be null";
+        
         this.ui = ui;
         this.storage = storage;
     }
