@@ -59,7 +59,7 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getUserDialog(userText, userImage),
                 DialogBox.getBotDialog(chioChatText, botImage)
             ).forEach(dialog -> dialogContainer.getChildren().add(dialog));
-
+            
             userInput.clear();
         } catch (ChioChatException.EmptyInput e) {
             userInput.clear();
