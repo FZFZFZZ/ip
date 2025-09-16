@@ -49,12 +49,15 @@ public class DialogBox extends HBox {
     }
 
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        DialogBox box = new DialogBox(text, img);
+        box.getStyleClass().add("dialog-user");
+        return box;
     }
 
     public static DialogBox getBotDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
+        db.getStyleClass().add("dialog-bot");
         return db;
     }
 }

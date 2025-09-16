@@ -1,0 +1,44 @@
+/* AI assisted chat style */
+
+.dialog-user {
+  -fx-alignment: TOP_RIGHT;
+}
+
+.dialog-user .message {
+  -fx-background-color: #2563eb; /* blue */
+  -fx-text-fill: white;
+  -fx-padding: 8 12 8 12;
+  -fx-background-radius: 14 14 2 14; /* speech bubble tail on left-bottom */
+}
+
+.dialog-user .avatar {
+  -fx-opacity: 1; /* show user avatar */
+}
+
+.dialog-bot {
+  -fx-alignment: TOP_LEFT;
+}
+
+.dialog-bot .message {
+  -fx-background-color: #f3f4f6; /* light gray */
+  -fx-text-fill: #111827;
+  -fx-padding: 10 14 10 14;
+  -fx-background-radius: 14 2 14 14; /* tail on right-bottom */
+  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 6, 0.2, 0, 2);
+}
+
+.dialog-bot .avatar {
+  -fx-opacity: 1;
+}
+
+/* Dialog container spacing */
+#dialogContainer {
+  -fx-spacing: 8;
+  -fx-padding: 12;
+}
+
+/* ScrollPane tweaks */
+#scrollPane {
+  -fx-background-color: transparent;
+}
+
