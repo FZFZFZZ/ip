@@ -17,8 +17,24 @@ public class CommandManager {
         "event", (input) -> addTask(input, "event"),
         "todo", (input) -> addTask(input, "todo"),
         "delete", (input) -> deleteTask(input),
-        "find", (input) -> findTask(input)
+        "find", (input) -> findTask(input),
+        "help", (input) -> showHelp()
     );
+
+    private String showHelp() {
+        return this.ui.wrapOutput(
+            "Here are the available commands:\n\n"
+            + "  list               → Show all tasks in your list\n"
+            + "  todo <desc>        → Add a ToDo task\n"
+            + "  deadline <desc>    → Add a Deadline task. Use '/by <time>' to specify timing\n"
+            + "  event <desc>       → Add an Event task. Use '/from <time> /to <time>' to specify timing\n"
+            + "  delete <id>        → Delete a task by ID\n"
+            + "  mark <id>          → Mark a task as done\n"
+            + "  unmark <id>        → Unmark a task (set as not done)\n"
+            + "  find <keyword>     → Search tasks containing a keyword\n"
+            + "  help               → Show this help menu\n"
+        );
+    }
 
     private String findTask(String input) {
         String[] parts = input.split(" ", 2);
