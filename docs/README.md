@@ -1,30 +1,43 @@
-# ChioChat User Guide
+# ChioChat — User Guide
 
-// Update the title above to match the actual product name
+ChioChat is a simple task-tracking chatbot with a clean, asymmetric chat UI. Type commands into the input box and press Enter or click Send. ChioChat will reply in the chat. Type `bye` to exit.
 
-// Product screenshot goes here
+## Quick Start
+- Launch the app. You will see a greeting from ChioChat.
+- Enter a command (see below) and press Enter.
+- Tasks are saved automatically; you can close the app anytime.
 
-// Product intro goes here
+## Commands Overview
+(See the in-app `help` command or the command map in `CommandManager` for the authoritative list.)
 
-## Adding deadlines
+- list: Show all tasks
+  - Example: `list`
 
-// Describe the action and its outcome.
+- todo <desc>: Add a ToDo task
+  - Example: `todo Read CS2103T text`
 
-// Give examples of usage
+- deadline <desc> /by <time>: Add a Deadline task
+  - Example: `deadline Submit iP /by 2025-09-30 23:59`
 
-Example: `keyword (optional arguments)`
+- event <desc> /from <start> /to <end>: Add an Event task
+  - Example: `event Hackathon /from 2025-10-05 10:00 /to 2025-10-06 18:00`
 
-// A description of the expected outcome goes here
+- delete <id>: Delete a task by its listed ID (1-based)
+  - Example: `delete 2`
 
-```
-expected output
-```
+- mark <id>: Mark a task as done
+  - Example: `mark 3`
 
-## Feature ABC
+- unmark <id>: Mark a task as not done
+  - Example: `unmark 3`
 
-// Feature details
+- find <keyword>: Search tasks containing a keyword
+  - Example: `find iP`
 
+- help: Show the help menu with all commands
+  - Example: `help`
 
-## Feature XYZ
-
-// Feature details
+## Tips
+- IDs shown in `list` start from 1.
+- If a command needs more details, ChioChat will let you know.
+- Type `bye` to close the app.
